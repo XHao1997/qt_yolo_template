@@ -1,19 +1,18 @@
 import sys
-import signal
-from PySide6 import QtWidgets
-from main_window import MainWindow
+from PySide6.QtWidgets import QApplication, QMainWindow
+from PySide6.QtCore import QFile
+from main_window_ui import Ui_MainWindow
 
-def load_custom_style():
-    with open("style.qss", "r") as f:
-        _style = f.read()
-        app.setStyleSheet(_style)
-
-def exit_with_sigint():
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super(MainWindow, self).__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    load_custom_style()
-    exit_with_sigint()
-    main_window = MainWindow()
-    app.exec()
+    app = QApplication(sys.argv)
+
+    window = MainWindow()
+    window.show()
+
+    sys.exit(app.exec())
